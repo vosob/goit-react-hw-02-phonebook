@@ -17,7 +17,7 @@ const PhoneBookSchema = Yup.object().shape({
     .required('This field is required!'),
 });
 
-export const PhoneBookForm = ({ onAddContact, contacts }) => {
+export const PhoneBookForm = ({ onAddContact }) => {
   return (
     <Formik
       initialValues={{
@@ -26,19 +26,13 @@ export const PhoneBookForm = ({ onAddContact, contacts }) => {
       }}
       validationSchema={PhoneBookSchema}
       onSubmit={(value, helper) => {
-        if (contacts.map(({ name }) => name).includes(value.name)) {
-          return Notiflix.Notify.failure(
-            `${value.name} is already in contacts.`
-          );
-        } else if (
-          contacts.map(({ number }) => number).includes(value.number)
-        ) {
-          return Notiflix.Notify.failure(
-            `This number ${value.number} is already in contacts.`
-          );
-        }
         onAddContact(value);
-        helper.resetForm();
+        helper.resetForm({
+          values: {
+            name: '',
+            number: '',
+          },
+        });
       }}
     >
       <ContactsBookForm>

@@ -1,5 +1,4 @@
 import { Formik } from 'formik';
-import Notiflix from 'notiflix';
 import * as Yup from 'yup';
 import {
   ContactsBookForm,
